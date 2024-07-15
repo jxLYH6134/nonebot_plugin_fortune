@@ -156,7 +156,7 @@ async def _(
 
 @limit_setting.handle()
 async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
-    logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
+    # logger.warning("指定签底抽签功能将在 v0.5.x 弃用")
 
     gid: str = get_group_or_person(event.get_session_id())
     uid: str = event.get_user_id()

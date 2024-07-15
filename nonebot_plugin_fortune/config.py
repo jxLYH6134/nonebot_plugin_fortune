@@ -192,7 +192,7 @@ async def fortune_check() -> None:
                 logger.info(
                     "旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json"
                 )
-                logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
+                # logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
                 _flag = True
 
         if not _flag:
@@ -210,7 +210,7 @@ async def fortune_check() -> None:
                 logger.info(
                     "旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json"
                 )
-                logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
+                # logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
 
 
 def group_rules_transfer(fortune_setting_dir: Path, group_rules_dir: Path) -> bool:
