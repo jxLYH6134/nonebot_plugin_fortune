@@ -88,7 +88,7 @@ async def _(event: Event, args: Annotated[Message, CommandArg()], matcher: Match
 
     is_first, image_file = fortune_manager.divine(gid, uid, None, None)
     if image_file is None:
-        await matcher.finish("今日运势生成出错……")
+        await matcher.finish("今日运势生成出错……1")
 
     if not is_first:
         msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n"), Image(image_file)])
@@ -115,7 +115,7 @@ async def _(matcher: Matcher, event: Event, user_themes: Annotated[str, RegexStr
 
                 is_first, image_file = fortune_manager.divine(gid, uid, theme, None)
                 if image_file is None:
-                    await specific_divine.finish("今日运势生成出错……")
+                    await specific_divine.finish("今日运势生成出错……2")
 
                 if not is_first:
                     msg = MessageFactory(
@@ -164,7 +164,7 @@ async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
     if limit == "随机":
         is_first, image_file = fortune_manager.divine(gid, uid, None, None)
         if image_file is None:
-            await limit_setting.finish("今日运势生成出错……")
+            await limit_setting.finish("今日运势生成出错……3")
     else:
         spec_path = fortune_manager.specific_check(limit)
         if not spec_path:
@@ -174,7 +174,7 @@ async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
         else:
             is_first, image_file = fortune_manager.divine(gid, uid, None, spec_path)
             if image_file is None:
-                await limit_setting.finish("今日运势生成出错……")
+                await limit_setting.finish("今日运势生成出错……4")
 
     if not is_first:
         msg = MessageFactory([Text("你今天抽过签了，再给你看一次哦🤗\n"), Image(image_file)])
