@@ -15,37 +15,8 @@ from .download import ResourceError, download_resource
 """
 FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
-    "amazing_grace": ["奇异恩典"],
-    "arknights": ["明日方舟", "方舟", "arknights", "鹰角", "Arknights", "舟游"],
-    "asoul": ["Asoul", "asoul", "a手", "A手", "as", "As"],
-    "azure": ["碧蓝航线", "碧蓝", "azure", "Azure"],
-    "dc4": ["dc4", "DC4", "Dc4"],
-    "einstein": ["爱因斯坦携爱敬上", "爱因斯坦", "einstein", "Einstein"],
-    "genshin": ["原神", "Genshin Impact", "genshin", "Genshin", "op", "原批"],
-    "granblue_fantasy": ["碧蓝幻想", "Granblue Fantasy", "granblue fantasy", "幻想"],
-    "hololive": [
-        "Hololive",
-        "hololive",
-        "Vtb",
-        "vtb",
-        "管人",
-        "Holo",
-        "holo",
-        "管人痴",
-    ],
-    "hoshizora": ["星空列车与白的旅行", "星空列车"],
-    "liqingge": ["李清歌", "清歌"],
-    "onmyoji": ["阴阳师", "yys", "Yys", "痒痒鼠"],
-    "pcr": ["PCR", "公主链接", "公主连结", "Pcr", "pcr"],
-    "pretty_derby": ["赛马娘", "马", "马娘", "赛马"],
-    "punishing": ["战双", "战双帕弥什"],
-    "sakura": ["樱色之云绯色之恋", "樱云之恋", "樱云绯恋", "樱云"],
-    "summer_pockets": ["夏日口袋", "夏兜", "sp", "SP"],
-    "sweet_illusion": ["灵感满溢的甜蜜创想", "甜蜜一家人", "富婆妹"],
-    "touhou": ["东方", "touhou", "Touhou", "车万"],
-    "touhou_lostword": ["东方归言录", "东方lostword", "touhou lostword"],
-    "touhou_old": ["旧东方", "旧版东方", "老东方", "老版东方", "经典东方"],
-    "warship_girls_r": ["战舰少女R", "舰r", "舰R", "wsgr", "WSGR", "战舰少女r"],
+    "blue_archive": ["BA", "ba", "蔚蓝档案", "碧蓝档案"],
+    "yuzusoft": ["yuzu", "柚子", "柚子社"],
 }
 
 
@@ -60,28 +31,7 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     Make sure NOT ALL FALSE!
     """
 
-    amazing_grace_flag: bool = True
-    arknights_flag: bool = True
-    asoul_flag: bool = True
-    azure_flag: bool = True
-    dc4_flag: bool = True
-    einstein_flag: bool = True
-    genshin_flag: bool = True
-    granblue_fantasy_flag: bool = True
-    hololive_flag: bool = True
-    hoshizora_flag: bool = True
-    liqingge_flag: bool = True
-    onmyoji_flag: bool = True
-    pcr_flag: bool = True
-    pretty_derby_flag: bool = True
-    punishing_flag: bool = True
-    sakura_flag: bool = True
-    summer_pockets_flag: bool = True
-    sweet_illusion_flag: bool = True
-    touhou_flag: bool = True
-    touhou_lostword_flag: bool = True
-    touhou_old_flag: bool = True
-    warship_girls_r_flag: bool = True
+    blue_archive_flag: bool = True
 
     @root_validator
     def check_all_disabled(cls, values) -> None:
