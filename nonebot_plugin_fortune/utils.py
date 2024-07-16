@@ -12,7 +12,7 @@ def get_copywriting() -> Tuple[str, str]:
     """
     Read the copywriting.json, choice a luck with a random content
     """
-    _p: Path = fortune_config.divine_path / "fortune" / "copywriting.json"
+    _p: Path = fortune_config.divine_path / "copywriting.json"
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")

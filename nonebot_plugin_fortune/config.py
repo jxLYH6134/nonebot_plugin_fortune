@@ -22,8 +22,8 @@ FortuneThemesDict: Dict[str, List[str]] = {
 
 
 class PluginConfig(BaseModel, extra=Extra.ignore):
-    divine_path: Path = Path(__file__).parent.parent.parent / "resource" / "fortune"
-    data_path: Path = Path(__file__).parent.parent.parent / "data" / "fortune"
+    divine_path: Path = Path().absolute() / "resource" / "fortune"
+    data_path: Path = Path().absolute() / "data" / "fortune"
     github_proxy: str = "https://github.com/"
 
 
@@ -93,7 +93,7 @@ async def fortune_check() -> None:
 		Try to get the latest copywriting from the repository.
 	"""
     copywriting_path: Path = (
-        fortune_config.divine_path / "fortune" / "copywriting.json"
+        fortune_config.divine_path / "copywriting.json"
     )
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
