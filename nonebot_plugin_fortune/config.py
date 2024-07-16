@@ -105,7 +105,7 @@ async def fortune_check() -> None:
 		Check rules and data files
 	"""
     fortune_data_path: Path = fortune_config.data_path / "fortune_data.json"
-    fortune_setting_path: Path = fortune_config.data_path / "fortune_setting.json"
+    # fortune_setting_path: Path = fortune_config.data_path / "fortune_setting.json"
     group_rules_path: Path = fortune_config.data_path / "group_rules.json"
     specific_rules_path: Path = fortune_config.data_path / "specific_rules.json"
 
@@ -164,39 +164,39 @@ async def fortune_check() -> None:
     _flag: bool = False
     if not group_rules_path.exists():
         # In version 0.4.x, compatible job will be done automatically if group_rules.json doesn't exist
-        if fortune_setting_path.exists():
-            # Try to transfer from the old setting json
-            ret = group_rules_transfer(fortune_setting_path, group_rules_path)
-            if ret:
-                logger.info(
-                    "旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json"
-                )
-                _flag = True
+        # if fortune_setting_path.exists():
+        #     # Try to transfer from the old setting json
+        #     ret = group_rules_transfer(fortune_setting_path, group_rules_path)
+        #     if ret:
+        #         logger.info(
+        #             "旧版 fortune_setting.json 文件中群聊抽签主题设置已更新至 group_rules.json"
+        #         )
+        #         _flag = True
 
         if not _flag:
             # If failed or fortune_setting_path doesn't exist, initialize group_rules.json instead
             with group_rules_path.open("w", encoding="utf-8") as f:
                 json.dump(dict(), f, ensure_ascii=False, indent=4)
 
-            logger.info(
-                "旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json"
-            )
+            # logger.info(
+            #     "旧版 fortune_setting.json 文件中群聊抽签主题设置不存在，初始化 group_rules.json"
+            # )
 
     _flag = False
     if not specific_rules_path.exists():
         # In version 0.4.9 and 0.4.10, data transfering will be done automatically if specific_rules.json doesn't exist
-        if fortune_setting_path.exists():
-            # Try to transfer from the old setting json
-            ret = specific_rules_transfer(fortune_setting_path, specific_rules_path)
-            if ret:
-                # Delete the old fortune_setting json if the transfer is OK
-                fortune_setting_path.unlink()
-
-                logger.info(
-                    "旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json"
-                )
-                # logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
-                _flag = True
+        # if fortune_setting_path.exists():
+        #     # Try to transfer from the old setting json
+        #     ret = specific_rules_transfer(fortune_setting_path, specific_rules_path)
+        #     if ret:
+        #         # Delete the old fortune_setting json if the transfer is OK
+        #         fortune_setting_path.unlink()
+        #
+        #         logger.info(
+        #             "旧版 fortune_setting.json 文件中签底指定规则已更新至 specific_rules.json"
+        #         )
+        #         # logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
+        #         _flag = True
 
         if not _flag:
             # Try to download it from repo
@@ -210,9 +210,9 @@ async def fortune_check() -> None:
                 with specific_rules_path.open("w", encoding="utf-8") as f:
                     json.dump(dict(), f, ensure_ascii=False, indent=4)
 
-                logger.info(
-                    "旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json"
-                )
+                # logger.info(
+                #     "旧版 fortune_setting.json 文件中签底指定规则不存在，初始化 specific_rules.json"
+                # )
                 # logger.warning("指定签底抽签功能将在 v0.5.0 弃用")
 
 
