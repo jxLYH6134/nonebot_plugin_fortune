@@ -124,6 +124,29 @@ class FortuneManager:
         self._save_data()
         self._save_group_rules()
 
+    def reset_user_data(self, gid: str, uid: str) -> bool:
+        """
+        重置某人抽签记录
+        """
+        self._load_data()
+        now_time = str(date.today())
+
+        last_sign_date = self._user_data.get(gid, {}).get(uid, {}).get("last_sign_date")
+        if not last_sign_date:
+            return False
+
+        if last_sign_date == now_time:
+            del self._user_data[gid][uid]
+
+            if not self._user_data[gid]:
+                del self._user_data[gid]
+
+            self._save_data()
+            return True
+
+        self._save_data()
+        return False
+
     @staticmethod
     def get_available_themes() -> str:
         """

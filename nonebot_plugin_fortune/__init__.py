@@ -1,4 +1,5 @@
 from typing import Annotated
+from re import findall
 
 from nonebot import on_command, on_fullmatch, on_regex, require
 from nonebot.adapters import Event, Message
@@ -26,7 +27,8 @@ __fortune_usages__ = """
 [设置xx签] 设置群抽签主题
 [重置主题] 重置群抽签主题
 [主题列表] 查看可选的抽签主题
-[查看主题] 查看群抽签主题""".strip()
+[查看主题] 查看群抽签主题
+[重置抽签] 重置某人抽签(仅超管或群主)""".strip()
 
 __plugin_meta__ = PluginMetadata(
     name="今日运势",
@@ -59,6 +61,7 @@ reset_themes = on_regex(
 )
 themes_list = on_fullmatch("主题列表", permission=GROUP, priority=8, block=True)
 show_themes = on_regex("^查看(抽签)?主题$", permission=GROUP, priority=8, block=True)
+reset_user = on_command("重置抽签", permission=SUPERUSER | GROUP_OWNER, priority=7, block=True)
 
 
 @show_themes.handle()
@@ -176,6 +179,20 @@ async def _(event: Event, limit: Annotated[str, Depends(get_user_arg)]):
         msg = MessageFactory([Text("✨今日运势✨\n"), Image(image_file)])
 
     await msg.finish(at_sender=True)
+
+
+@reset_user.handle()
+async def _(event: Event, matcher: Matcher, args: Message = CommandArg()):
+    gid: str = get_group_or_person(event.get_session_id())
+    uid_set = set(findall(r'qq=(\d+)', str(args)))
+    if not uid_set:
+        await matcher.finish("你还没有指定操作对象哦~")
+    for uid in uid_set:
+        if fortune_manager.reset_user_data(gid, uid):
+            await matcher.send(f"{uid}今日抽签已重置")
+        else:
+            await matcher.send(f"{uid}今日未抽签")
+    await matcher.finish()
 
 
 @reset_themes.handle()
