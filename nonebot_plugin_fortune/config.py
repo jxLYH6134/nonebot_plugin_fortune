@@ -15,8 +15,9 @@ from .download import ResourceError, download_resource
 """
 FortuneThemesDict: Dict[str, List[str]] = {
     "random": ["随机"],
-    "blue_archive": ["BA", "ba", "蔚蓝档案", "碧蓝档案"],
-    "yuzusoft": ["yuzu", "柚子", "柚子社"],
+    "blue_archive": ["蔚蓝档案", "碧蓝档案", "BA", "ba"],
+    "yuzusoft": ["柚子社", "柚子", "yuzu"],
+    "others": ["其他更多……", "其他"],
 }
 
 
@@ -33,6 +34,8 @@ class ThemesFlagConfig(BaseModel, extra=Extra.ignore):
     """
 
     blue_archive_flag: bool = True
+    yuzusoft_flag: bool = True
+    others_flag: bool = True
 
     @root_validator
     def check_all_disabled(cls, values) -> None:
