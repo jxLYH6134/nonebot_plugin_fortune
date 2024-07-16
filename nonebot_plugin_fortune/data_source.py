@@ -13,10 +13,10 @@ class FortuneManager:
         self._user_data: Dict[str, Dict[str, Dict[str, Union[str, int, date]]]] = dict()
         self._group_rules: Dict[str, str] = dict()
         self._specific_rules: Dict[str, List[str]] = dict()
-        self._user_data_file: Path = fortune_config.fortune_path / "fortune_data.json"
-        self._group_rules_file: Path = fortune_config.fortune_path / "group_rules.json"
+        self._user_data_file: Path = fortune_config.data_path / "fortune_data.json"
+        self._group_rules_file: Path = fortune_config.data_path / "group_rules.json"
         self._specific_rules_file: Path = (
-            fortune_config.fortune_path / "specific_rules.json"
+            fortune_config.data_path / "specific_rules.json"
         )
 
     def _multi_divine_check(self, gid: str, uid: str, nowtime: date) -> bool:
@@ -86,7 +86,7 @@ class FortuneManager:
                 img_file = f.read()
             return True, img_file
         else:
-            img_path: Path = fortune_config.fortune_path / "out" / f"{gid}_{uid}.png"
+            img_path: Path = fortune_config.data_path / "out" / f"{gid}_{uid}.png"
             with img_path.open(mode="rb") as f:
                 img_file = f.read()
             return False, img_file
@@ -96,7 +96,7 @@ class FortuneManager:
         """
         Clean all the pictures saved at yesterday.
         """
-        dirPath: Path = fortune_config.fortune_path / "out"
+        dirPath: Path = fortune_config.data_path / "out"
         for pic in dirPath.iterdir():
             pic.unlink()
 

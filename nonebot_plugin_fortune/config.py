@@ -21,7 +21,8 @@ FortuneThemesDict: Dict[str, List[str]] = {
 
 
 class PluginConfig(BaseModel, extra=Extra.ignore):
-    fortune_path: Path = Path(__file__).parent / "resource"
+    divine_path: Path = Path(__file__).parent.parent.parent / "resource" / "fortune"
+    data_path: Path = Path(__file__).parent.parent.parent / "data" / "fortune"
     github_proxy: str = "https://github.com/"
 
 
@@ -69,25 +70,27 @@ themes_flag_config: ThemesFlagConfig = ThemesFlagConfig.parse_obj(driver.config.
 
 @driver.on_startup
 async def fortune_check() -> None:
-    if not fortune_config.fortune_path.exists():
-        fortune_config.fortune_path.mkdir(parents=True, exist_ok=True)
+    if not fortune_config.divine_path.exists():
+        fortune_config.divine_path.mkdir(parents=True, exist_ok=True)
+    if not fortune_config.data_path.exists():
+        fortune_config.data_path.mkdir(parents=True, exist_ok=True)
 
     """Check fonts"""
-    fonts_path: Path = fortune_config.fortune_path / "font"
+    fonts_path: Path = fortune_config.divine_path / "font"
     if not fonts_path.exists():
         fonts_path.mkdir(parents=True, exist_ok=True)
 
     if not (fonts_path / "Mamelon.otf").is_file():
-        raise ResourceError("Resource Mamelon.otf is missing! Please check!")
+        raise ResourceError("资源 Mamelon.otf 缺失！请检查！")
 
     if not (fonts_path / "sakura.ttf").is_file():
-        raise ResourceError("Resource sakura.ttf is missing! Please check!")
+        raise ResourceError("资源 sakura.ttf 缺失！请检查！")
 
     """
 		Try to get the latest copywriting from the repository.
 	"""
     copywriting_path: Path = (
-        fortune_config.fortune_path / "fortune" / "copywriting.json"
+        fortune_config.divine_path / "fortune" / "copywriting.json"
     )
     if not copywriting_path.parent.exists():
         copywriting_path.parent.mkdir(parents=True, exist_ok=True)
@@ -101,10 +104,10 @@ async def fortune_check() -> None:
     """
 		Check rules and data files
 	"""
-    fortune_data_path: Path = fortune_config.fortune_path / "fortune_data.json"
-    fortune_setting_path: Path = fortune_config.fortune_path / "fortune_setting.json"
-    group_rules_path: Path = fortune_config.fortune_path / "group_rules.json"
-    specific_rules_path: Path = fortune_config.fortune_path / "specific_rules.json"
+    fortune_data_path: Path = fortune_config.data_path / "fortune_data.json"
+    fortune_setting_path: Path = fortune_config.data_path / "fortune_setting.json"
+    group_rules_path: Path = fortune_config.data_path / "group_rules.json"
+    specific_rules_path: Path = fortune_config.data_path / "specific_rules.json"
 
     if not fortune_data_path.exists():
         logger.warning("Resource fortune_data.json is missing, initialized one...")

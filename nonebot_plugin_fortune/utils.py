@@ -12,7 +12,7 @@ def get_copywriting() -> Tuple[str, str]:
     """
     Read the copywriting.json, choice a luck with a random content
     """
-    _p: Path = fortune_config.fortune_path / "fortune" / "copywriting.json"
+    _p: Path = fortune_config.divine_path / "fortune" / "copywriting.json"
 
     with open(_p, "r", encoding="utf-8") as f:
         content = json.load(f).get("copywriting")
@@ -25,11 +25,11 @@ def get_copywriting() -> Tuple[str, str]:
 
 def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
     if isinstance(spec_path, str):
-        p: Path = fortune_config.fortune_path / "img" / spec_path
+        p: Path = fortune_config.divine_path / "img" / spec_path
         return p
 
     if theme == "random":
-        __p: Path = fortune_config.fortune_path / "img"
+        __p: Path = fortune_config.divine_path / "img"
 
         # Each dir is a theme.
         themes: List[str] = [
@@ -43,7 +43,7 @@ def random_basemap(theme: str, spec_path: Optional[str] = None) -> Path:
         images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
         p: Path = random.choice(images_dir)
     else:
-        _p: Path = fortune_config.fortune_path / "img" / theme
+        _p: Path = fortune_config.divine_path / "img" / theme
         images_dir: List[Path] = [i for i in _p.iterdir() if i.is_file()]
         p: Path = random.choice(images_dir)
 
@@ -64,8 +64,8 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
     color = "#F5F5F5"
     image_font_center = [140, 99]
     fontPath = {
-        "title": f"{fortune_config.fortune_path}/font/Mamelon.otf",
-        "text": f"{fortune_config.fortune_path}/font/sakura.ttf",
+        "title": f"{fortune_config.divine_path}/font/Mamelon.otf",
+        "text": f"{fortune_config.divine_path}/font/sakura.ttf",
     }
     ttfront = ImageFont.truetype(fontPath["title"], font_size)
     # font_length = ttfront.getsize(title)
@@ -102,7 +102,7 @@ def drawing(gid: str, uid: str, theme: str, spec_path: Optional[str] = None) -> 
         draw.text((x, y), textVertical, fill=color, font=ttfront)
 
     # Save
-    outDir: Path = fortune_config.fortune_path / "out"
+    outDir: Path = fortune_config.data_path / "out"
     if not outDir.exists():
         outDir.mkdir(exist_ok=True, parents=True)
 
