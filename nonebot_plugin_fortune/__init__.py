@@ -42,9 +42,7 @@ __plugin_meta__ = PluginMetadata(
     },
 )
 
-general_divine = on_command(
-    "今日运势", aliases={"抽签", "运势"}, permission=GROUP, priority=8
-)
+general_divine = on_regex("^(今日运势|抽签|运势)$", permission=GROUP, priority=8)
 specific_divine = on_regex(r"^[^/]\S+抽签$", permission=GROUP, priority=8)
 limit_setting = on_regex(r"^指定(.*?)签$", permission=GROUP, priority=8)
 change_theme = on_regex(
@@ -77,12 +75,7 @@ async def _(matcher: Matcher):
 
 
 @general_divine.handle()
-async def _(event: Event, args: Annotated[Message, CommandArg()], matcher: Matcher):
-    arg: str = args.extract_plain_text()
-
-    if "帮助" in arg[-2:]:
-        await general_divine.finish(__fortune_usages__)
-
+async def _(event: Event, matcher: Matcher):
     gid: str = get_group_or_person(event.get_session_id())
     uid: str = event.get_user_id()
 
